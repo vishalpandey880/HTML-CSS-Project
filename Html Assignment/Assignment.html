@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>🎮 Funny Hover Celebration Game</title>
+
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:Poppins,sans-serif;
+  transition:0.5s;
+}
+
+/* DAY */
+body.day{
+  background:linear-gradient(45deg,#ffd6e8,#8bd1f1,#ff9acb);
+}
+
+/* NIGHT */
+body.night{
+  background:linear-gradient(45deg,#0f2027,#203a43,#000);
+}
+
+canvas{
+  background:rgba(255,255,255,0.08);
+  border-radius:25px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.4);
+}
+
+.controls{
+  position:fixed;
+  top:20px;
+  right:20px;
+  display:flex;
+  gap:10px;
+}
+
+button{
+  padding:8px 14px;
+  border:none;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body class="day">
+
+<div class="controls">
+  <button id="musicBtn">🔊 Music</button>
+  <button id="modeBtn">🌙 Night</button>
+</div>
+
+<canvas id="game" width="800" height="450"></canvas>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+/* =====================
+   AUDIO (LOCAL FILES)
+===================== */
+const music = new Audio("music.mp3");
+const pop = new Audio("pop.mp3");
+const boom = new Audio("boom.mp3");
+
+music.loop = true;
+music.volume = 0.5;
+
+/* unlock sound on first click */
+document.body.addEventListener("click", ()=>{
+  music.play().then(()=>music.pause());
+  pop.play().then(()=>pop.pause());
+  boom.play().then(()=>boom.pause());
+},{once:true});
+
+/* =====================
+   BUTTONS
+===================== */
+const musicBtn=document.getElementById("musicBtn");
+const modeBtn=document.getElementById("modeBtn");
+
+musicBtn.onclick=()=>{
+  if(music.paused){
+    music.play();
+    musicBtn.innerText="⏸ Pause";
+  }else{
+    music.pause();
+    musicBtn.innerText="🔊 Music";
+  }
+};
+
+modeBtn.onclick=()=>{
+  document.body.classList.toggle("night");
+  document.body.classList.toggle("day");
+};
+
+/* =====================
+   GAME
+===================== */
+let score=0;
+let bombsHit=0;
+
+class Item{
+  constructor(type){
+    this.type=type;
+    this.reset();
+  }
+
+  reset(){
+    this.x=Math.random()*760+20;
+    this.y=470;
+    this.size=35;
+    this.speed=Math.random()*2+1;
+  }
+
+  draw(){
+    ctx.font="30px Arial";
+    ctx.fillText(this.type==="pizza"?"🍕":"💣",this.x,this.y);
+  }
+
+  update(){
+    this.y-=this.speed;
+    if(this.y<0) this.reset();
+  }
+}
+
+let items=[];
+
+for(let i=0;i<6;i++) items.push(new Item("pizza"));
+for(let i=0;i<3;i++) items.push(new Item("bomb"));
+
+/* =====================
+   HOVER DETECT
+===================== */
+canvas.onmousemove=(e)=>{
+  const mx=e.offsetX;
+  const my=e.offsetY;
+
+  items.forEach(item=>{
+    if(
+      mx>item.x-20 &&
+      mx<item.x+20 &&
+      my>item.y-20 &&
+      my<item.y+20
+    ){
+      if(item.type==="pizza"){
+        score++;
+        pop.currentTime=0;
+        pop.play();
+      }else{
+        bombsHit++;
+        boom.currentTime=0;
+        boom.play();
+        shake();
+      }
+      item.reset();
+    }
+  });
+};
+
+/* =====================
+   SHAKE EFFECT
+===================== */
+function shake(){
+  canvas.style.transform="translate(6px,0)";
+  setTimeout(()=>canvas.style.transform="translate(-6px,0)",40);
+  setTimeout(()=>canvas.style.transform="translate(0,0)",80);
+}
+
+/* =====================
+   FIREWORKS
+===================== */
+let fireworks=[];
+
+class Firework{
+  constructor(x,y){
+    this.p=[];
+    for(let i=0;i<30;i++){
+      this.p.push({
+        x,y,
+        angle:Math.random()*6.28,
+        speed:Math.random()*3+1,
+        life:50
+      });
+    }
+  }
+  update(){
+    this.p.forEach(a=>{
+      a.x+=Math.cos(a.angle)*a.speed;
+      a.y+=Math.sin(a.angle)*a.speed;
+      a.life--;
+    });
+  }
+  draw(){
+    this.p.forEach(a=>{
+      ctx.fillStyle=`rgba(255,255,255,${a.life/50})`;
+      ctx.fillRect(a.x,a.y,3,3);
+    });
+  }
+}
+
+canvas.onclick=(e)=>{
+  fireworks.push(new Firework(e.offsetX,e.offsetY));
+};
+
+/* =====================
+   LOOP
+===================== */
+function loop(){
+  ctx.clearRect(0,0,800,450);
+
+  items.forEach(i=>{
+    i.update();
+    i.draw();
+  });
+
+  fireworks.forEach((f,index)=>{
+    f.update();
+    f.draw();
+    if(f.p[0].life<=0) fireworks.splice(index,1);
+  });
+
+  ctx.font="20px Poppins";
+  ctx.fillStyle="white";
+  ctx.fillText("Score: "+score,20,30);
+  ctx.fillText("Bombs: "+bombsHit,20,60);
+
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+
+</body>
+</html>

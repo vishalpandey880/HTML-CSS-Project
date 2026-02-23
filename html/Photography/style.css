@@ -1,0 +1,290 @@
+        /* --- CSS STYLES --- */
+        :root {
+            --gold: #d4af37;
+            --dark-bg: #0a0a0a;
+            --overlay: rgba(0, 0, 0, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #fff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 30px 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-family: 'Great Vibes', cursive;
+            cursor: pointer;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        nav ul li a.active {
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 5px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(var(--overlay), var(--overlay)),
+                url('https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=2070') no-repeat center center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .script-text {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 3.5rem;
+            margin-bottom: -25px;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 10vw, 6rem);
+            letter-spacing: 15px;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        .hero p {
+            letter-spacing: 5px;
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: #000;
+            padding: 15px 30px;
+            border: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-gold:hover {
+            background: #fff;
+        }
+
+        /* About Section */
+        .about {
+            padding: 100px 10%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0d0d0d;
+        }
+
+        .about-container {
+            display: flex;
+            max-width: 1100px;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-img-wrapper {
+            position: relative;
+            flex: 1;
+        }
+
+        .about-img-wrapper img {
+            width: 100%;
+            height: auto;
+            position: relative;
+            z-index: 2;
+            filter: grayscale(100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-img-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #fff;
+            z-index: 1;
+        }
+
+        .about-text {
+            flex: 1.2;
+        }
+
+        .about-text h2 {
+            font-family: 'Great Vibes', cursive;
+            color: var(--gold);
+            font-size: 3rem;
+        }
+
+        .about-text p {
+            margin: 20px 0;
+            line-height: 1.8;
+            color: #aaa;
+        }
+
+        .gold-highlight {
+            color: var(--gold);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        /* Services Section */
+        .services {
+            padding: 100px 5%;
+            text-align: center;
+        }
+
+        .services h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .filter-tabs {
+            margin-bottom: 40px;
+        }
+
+        .filter-tabs span {
+            margin: 0 15px;
+            cursor: pointer;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .filter-tabs span.active {
+            color: var(--gold);
+            border-bottom: 1px solid var(--gold);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            height: 350px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item .label {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 5px 15px;
+            font-size: 0.8rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 100px 10%;
+            background: #050505;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            padding: 15px;
+            color: #fff;
+            margin-bottom: 15px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #222;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+
+            .about-container,
+            .contact-grid {
+                flex-direction: column;
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
