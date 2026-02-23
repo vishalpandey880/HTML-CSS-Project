@@ -65,6 +65,31 @@ Files located in the root `/css` directory.
 - **`svg_animation..html`**: Demonstrates the use of Scalable Vector Graphics along with CSS keyframe animation techniques directly in the browser.
 
 ---
+# 💣 Breakout Game
+
+A classic Arcade Breakout game built with HTML and CSS.
+
+## Features
+- **Classic Gameplay**: Experience the nostalgia of the classic brick breaker.
+- **Modern Design**: Clean, minimalist visuals for a distraction-free experience.
+- **Challenge Yourself**: Test your reflexes and clear all the bricks!
+
+## Project Structure
+- `index.html`: The landing page for the game.
+- `landing.css`: Styles for the landing page.
+- `main.html`: The main game interface containing the grid, paddle, and ball.
+- `out.css`: Styles for the main game.
+
+## How to Play
+1. Open `index.html` in your web browser to view the landing page.
+2. Click "START GAME" to navigate to the game area (`main.html`).
+3. (Note: Game logic like paddle movement and ball bouncing is currently not implemented yet and requires JavaScript to be fully functional.)
+
+## License
+&copy; 2024 Breakout. All rights reserved.
+
+
+---
 
 ## 🚀 Getting Started
 To view any of these projects:
